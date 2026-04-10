@@ -292,6 +292,26 @@ Approach : Prefix Sum + HashMap
        return count;
     }
 
+
+🧠 What does (0, 1) mean?
+It means: “Before starting, we have already seen a prefix sum = 0 exactly 1 time.”
+
+❓ Why do we need this?
+To handle cases where a subarray starting from index 0 has sum = k.
+
+🔍 Without (0,1) → Problem
+Example:
+nums = [3]
+k = 3
+Step:
+prefixSum = 3
+required = prefixSum - k = 3 - 3 = 0
+
+👉 Now we check:
+sumCountMap.containsKey(0)
+❌ If we didn’t put (0,1) → map doesn’t contain 0
+👉 We miss this valid subarray
+	
 // Try out for this array [2, 3, -5, 5, -5, 1, 4] k=5 output => 
 // Why we are adding (0,1) in the Map (Initially)
 Picture this array with imaginary position −1
