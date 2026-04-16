@@ -549,3 +549,21 @@ left + 1  → 0
 right - 1 → 2
 //(right - 1) - (left + 1) + 1 = right - left - 1
 
+🔍 The Problem
+After expansion, you only know:
+i → the center
+length → total palindrome length
+But to return substring, you need: startIndex
+	
+🧠 Key Idea
+A palindrome expands equally on both sides of the center.
+So:
+startIndex = center - (half of length)
+But careful — odd and even lengths behave slightly differently.
+
+✅ Final Unified Formula
+startIndex = i - (length - 1) / 2;
+
+This works for both odd and even palindromes.
+🎯 Intuition in One Line
+(length - 1) / 2 gives the correct left expansion distance from center, handling both odd and even palindromes.
