@@ -37,24 +37,29 @@ PROBLEMS :
         return uniqueIndex+1;     
     }
 
-Allow max 2 duplicates
-
+ALLOW MAX 2 DUPLICATES => 
 	class Solution {
-    public int removeDuplicates(int[] nums) {
-        
+    public int removeDuplicates(int[] nums) { 
         int idx = 2;
-
         for(int i=2;i<nums.length;i++){
             if(nums[i] != nums[idx-2]){
                 nums[idx]=nums[i];
                 idx++;
             }
         }
-
         return idx;
     }
 }
 
+NOTE : If allow k duplicates means replace 2(idx = 2) with k(idx = k) in code
+	int idx = k;
+	for(int i=k;i<arr.length;i++) {
+		if(arr[i] != arr[idx-k]) {
+				arr[idx]=arr[i];
+				idx++;
+		}
+	}
+	
 2) Remove Element : Use 2 Pointer
 
 3) Reverse String(Character array) : Use 2 pointer
