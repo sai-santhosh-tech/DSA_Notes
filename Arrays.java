@@ -15,6 +15,27 @@ FIND ALL NOTES IN NAMASTE DSA
 PROBLEMS :
 
 1) Remove Duplicates from Sorted Array : Use 2 Pointer 
+	
+ public int removeDuplicates(int[] nums) {
+        int uniqueIndex = 0;
+
+        if(nums.length == 0){
+            return 0;
+        }
+
+        if(nums.length == 1){
+            return 1;
+        }
+        nums[uniqueIndex] = nums[0];
+
+        for(int i=0;i<nums.length;i++){
+           if(nums[i] > nums[uniqueIndex]){
+                uniqueIndex++;
+                nums[uniqueIndex]=nums[i];
+           }
+        }
+        return uniqueIndex+1;     
+    }
 
 2) Remove Element : Use 2 Pointer
 
