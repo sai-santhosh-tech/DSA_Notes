@@ -135,6 +135,38 @@ Approach 2 : Two Pointer
         return maxArea;
     }
 
+5) Triplet Sum in Array
+Input: arr[] = [1, 4, 45, 6, 10, 8], target = 13
+Output: true 
+Explanation: The triplet {1, 4, 8} sums up to 13.
+
+class Solution {
+    public boolean hasTripletSum(int arr[], int target) {
+        Arrays.sort(arr);
+
+        for (int i = 0; i < arr.length - 2; i++) { // Avoid unnecessary iterations, Because we need at least 3 elements.
+		
+			  // 👇 Skip duplicate elements
+			  if (i > 0 && arr[i] == arr[i - 1]) continue;
+	
+            int left = i + 1;
+            int right = arr.length - 1;
+
+            while (left < right) {
+                int sum = arr[i] + arr[left] + arr[right];
+
+                if (sum == target) {
+                    return true;
+                } else if (sum < target) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+        return false;
+    }
+}
 5)3Sum
 Approach : 2 sum -Sorted array approach only
 
@@ -164,9 +196,18 @@ Approach : 2 sum -Sorted array approach only
                 left++;
             }else{
                 result.add(Arrays.asList(nums[left], nums[right], nums[x]));
-                left++;
-                right--;
-                while(left < right && nums[left] == nums[left-1]) left++; // To Skip duplicates
+
+				//👇 Skip duplicates for left
+				while (left < right && arr[left] == arr[left + 1]) {
+					left++;
+				}
+				// 👇 Skip duplicates for right
+				while (left < right && arr[right] == arr[right - 1]) {
+					right--;
+				}
+				// Move pointers after skipping
+				left++;
+                right--;   
             }
         }
     }
