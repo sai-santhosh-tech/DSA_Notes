@@ -292,7 +292,7 @@ Time Complexity : O(n) , Space Complexity : O(1)
       SUBSTRING = SLIDING WINDOW APPROACH ( MOST OF THE TIMES)
 	  
 7) Longest Substring Without Repeating Characters
-
+	
 Approach 1 : Sliding Window Approach with two pointers to expand and shrink the window[ Using HashMap ]
 
 	public int lengthOfLongestSubstring(String s) {
@@ -366,6 +366,12 @@ If we need String instead maxLength
 		
 		
 8) Longest Repeating Character Replacement
+
+		  
+💡 Key Intuition (MOST IMPORTANT)
+Instead of thinking: ❌ “Which characters should I replace?”
+Think: ✅ “Can this window be converted into all same characters using ≤ k replacements?”
+	
 Approach : Sliding Window Approach with two pointers to expand and shrink the window
 
 Space Complexity : O(1) => Maximum 26 Captial characters it contains
@@ -386,6 +392,8 @@ Space Complexity : O(1) => Maximum 26 Captial characters it contains
 
             int windowLength = j - i +1;
 
+			//windowLength - maxFreq > k Means We need more than k replacements ❌ So we shrink the window
+			//Why windowSize - maxFreq? Because: We keep the most frequent character as it is Replace all other characters(other characters should be less than k)
             if(windowLength - maxFreq > k){
                 Character c = s.charAt(i);
                 map.put(c,map.get(c)-1);
