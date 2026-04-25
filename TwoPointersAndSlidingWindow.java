@@ -460,10 +460,10 @@ Approach 2 : Array + Sliding Window  [ Time Complexity => O(n) (or) O(n * m) whe
             if(isHashSame(hashString, hashWindow)){
                 return true;
             }else{
-                hashWindow[s2.charAt(i)-'a']--;
+                hashWindow[s2.charAt(i)-'a']--;  // remove left char => window shrinks
                 i++;
                 j++;
-                if(j < s2.length()) hashWindow[s2.charAt(j)-'a']++;
+                if(j < s2.length()) hashWindow[s2.charAt(j)-'a']++; // add new right char => window expands
             }
         }
         return false;
