@@ -544,6 +544,13 @@ Approach : Sliding Window + Hashmap
 
 //Try out with this example [3,3,3,1,2,1,1,2,3,3,4]  output => 5
 
+
+11) Longest subarray with Atmost two distinct integers
+Input: arr[] = [3, 1, 2, 2, 2, 2]
+Output: 5
+Explanation: The longest subarray containing at most two distinct integers is [1, 2, 2, 2, 2], which has a length of 5.
+//Here also we can apply sliding window + HashMap approach like Fruit into Baskets
+
 12) Longest Substring With At Most K Distinct Characters
 	public static void main(String[] args) {
 		String str= "abcadcacacaca";
@@ -565,8 +572,11 @@ Approach : Sliding Window + Hashmap
 				i++;
 				
 			}
-			
-			maxSubStr = Math.max(maxSubStr, j-i+1);
+						
+			 // update only when exactly k unique characters
+			if(map.size() == k){
+				maxSubStr = Math.max(maxSubStr, j-i+1);
+			}
 		}
 
 		System.out.println(maxSubStr); // output : 11
