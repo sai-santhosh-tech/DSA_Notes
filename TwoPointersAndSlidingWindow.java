@@ -167,6 +167,7 @@ class Solution {
         return false;
     }
 }
+
 5)3Sum
 Approach : 2 sum -Sorted array approach only
 
@@ -196,11 +197,12 @@ Approach : 2 sum -Sorted array approach only
                 left++;
             }else{
                 result.add(Arrays.asList(nums[left], nums[right], nums[x]));
-
+               
 				//👇 Skip duplicates for left
 				while (left < right && arr[left] == arr[left + 1]) {
 					left++;
 				}
+
 				// 👇 Skip duplicates for right
 				while (left < right && arr[right] == arr[right - 1]) {
 					right--;
@@ -292,7 +294,7 @@ Time Complexity : O(n) , Space Complexity : O(1)
       SUBSTRING = SLIDING WINDOW APPROACH ( MOST OF THE TIMES)
 	  
 7) Longest Substring Without Repeating Characters
-	
+
 Approach 1 : Sliding Window Approach with two pointers to expand and shrink the window[ Using HashMap ]
 
 	public int lengthOfLongestSubstring(String s) {
@@ -366,13 +368,12 @@ If we need String instead maxLength
 		
 		
 8) Longest Repeating Character Replacement
+Approach : Sliding Window Approach with two pointers to expand and shrink the window
 
-		  
 💡 Key Intuition (MOST IMPORTANT)
 Instead of thinking: ❌ “Which characters should I replace?”
 Think: ✅ “Can this window be converted into all same characters using ≤ k replacements?”
-	
-Approach : Sliding Window Approach with two pointers to expand and shrink the window
+
 
 Space Complexity : O(1) => Maximum 26 Captial characters it contains
 
@@ -391,9 +392,9 @@ Space Complexity : O(1) => Maximum 26 Captial characters it contains
             maxFreq = Math.max(maxFreq, map.get(ch));
 
             int windowLength = j - i +1;
-
+			
 			//windowLength - maxFreq > k Means We need more than k replacements ❌ So we shrink the window
-			//Why windowSize - maxFreq? Because: We keep the most frequent character as it is Replace all other characters(other characters should be less than k)
+			//Why windowSize - maxFreq? Because: We keep the most frequent character as it is Replace all other characters
             if(windowLength - maxFreq > k){
                 Character c = s.charAt(i);
                 map.put(c,map.get(c)-1);
@@ -460,7 +461,7 @@ Approach 2 : Array + Sliding Window  [ Time Complexity => O(n) (or) O(n * m) whe
             if(isHashSame(hashString, hashWindow)){
                 return true;
             }else{
-                hashWindow[s2.charAt(i)-'a']--;  // remove left char => window shrinks
+                hashWindow[s2.charAt(i)-'a']--; // remove left char => window shrinks
                 i++;
                 j++;
                 if(j < s2.length()) hashWindow[s2.charAt(j)-'a']++; // add new right char => window expands
@@ -544,7 +545,6 @@ Approach : Sliding Window + Hashmap
 
 //Try out with this example [3,3,3,1,2,1,1,2,3,3,4]  output => 5
 
-
 11) Longest subarray with Atmost two distinct integers
 Input: arr[] = [3, 1, 2, 2, 2, 2]
 Output: 5
@@ -555,7 +555,7 @@ Explanation: The longest subarray containing at most two distinct integers is [1
 	public static void main(String[] args) {
 		String str= "abcadcacacaca";
 		Map<Character, Integer> map = new HashMap<>();
-		int maxSubStr = 0;
+		int maxSubStr = -1;
 		int k = 3;
 		int i = 0;
 		
@@ -572,11 +572,12 @@ Explanation: The longest subarray containing at most two distinct integers is [1
 				i++;
 				
 			}
-						
+			
 			 // update only when exactly k unique characters
 			if(map.size() == k){
 				maxSubStr = Math.max(maxSubStr, j-i+1);
 			}
+			
 		}
 
 		System.out.println(maxSubStr); // output : 11
@@ -691,3 +692,90 @@ Current window = "ADOBEC" (length 6)
 | 4    | E    | remove          | 0     |
 | 5    | C    | removing breaks | 1 ❌   |
 ✔ Window = "CODEBA" (length 6)
+
+15)You are given an array packetSizes of size n and an integer k. Your task is to find the maximum sum of any contiguous subarray of length k such that all elements in that subarray
+ are distinct. 
+Note: A subarray is a contiguous segment of the array. Only subarrays of exact length k should be considered. A valid subarray must contain no repeated packet sizes. 
+If no valid subarray of length k exists, return -1. 
+Example :
+packetSizes=[1, 2, 3, 7, 3, 5]  ,  k =3
+
+Valid Subarrays =>  [1, 2, 3] [2, 3, 7] [7, 3, 5] Sum 1+2+3=6 ,2+3+7=12, 7+3+5=15
+Note that [3, 7, 3] is not valid since not all elements are distinct. The maximum sum is 15 for the subarray [7, 3, 5]. Return 15.
+
+
+public class Solution {
+    public int maxDistinctSubarraySum(int[] packetSizes, int k) {
+        int n = packetSizes.length;
+        int i = 0, j = 0;
+        int sum = 0;
+        int maxSum = -1;
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        while (j < n) {
+            // Add current element
+            map.put(packetSizes[j], map.getOrDefault(packetSizes[j], 0) + 1);
+            sum += packetSizes[j];
+
+            // If window size exceeds k, shrink from left
+            if (j - i + 1 > k) {
+                map.put(packetSizes[i], map.get(packetSizes[i]) - 1);
+                if (map.get(packetSizes[i]) == 0) {
+                    map.remove(packetSizes[i]);
+                }
+                sum -= packetSizes[i];
+                i++;
+            }
+
+            // When window size is exactly k
+            if (j - i + 1 == k) {
+                // Check all elements distinct
+                if (map.size() == k) {
+                    maxSum = Math.max(maxSum, sum);
+                }
+            }
+
+            j++;
+        }
+
+        return maxSum;
+    }
+}
+
+
+16) Your task is to count how many substrings of s contain no repeating characters.
+A substring is a contiguous part of the string. A substring is valid if all characters in it are unique.Return the total number of valid substrings.
+Suppose s = "abac". Output: 8 
+Explanation: The substrings with no repeating characters are "a", "b", "a", "c", "ab", "ba", "ac", and "bac". 
+Note that "a" and "a" both qualify because their start indices are different: s[0] and s[2].
+
+import java.util.*;
+
+public class Solution {
+    public int countUniqueSubstrings(String s) {
+        int n = s.length();
+        int i = 0, j = 0;
+        int count = 0;
+
+        Set<Character> set = new HashSet<>();
+
+        while (j < n) {
+            // If duplicate, shrink window
+            while (set.contains(s.charAt(j))) {
+                set.remove(s.charAt(i));
+                i++;
+            }
+
+            // Add current character
+            set.add(s.charAt(j));
+
+            // Count substrings ending at j
+            count += (j - i + 1);
+
+            j++;
+        }
+
+        return count;
+    }
+}
