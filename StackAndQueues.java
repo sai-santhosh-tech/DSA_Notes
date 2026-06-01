@@ -98,9 +98,6 @@ Queue<Integer> queue = new LinkedList<>();
             n--;
          }
          int top = queue.peek();
-         queue.remove();
-         queue.add(top);
-
          return top;
     }
 3) Implement Queue using Stacks
@@ -389,6 +386,49 @@ nums1 = [5,3,9,2] so output will be [9,4,-1,6]
 
 Time and Space complexity : O(n)
 
+Next Smaller Element
+
+Input: arr[] = [4, 8, 5, 2, 25]
+Output: [2, 5, 2, -1, -1]
+
+class Solution {
+    static ArrayList<Integer> nextSmallerEle(int[] arr) {
+        ArrayList<Integer> result = new ArrayList<>();
+        result.add(-1);
+        Stack<Integer> stack = new Stack<>();
+        stack.push(arr[arr.length-1]);
+        
+        
+        for(int i=arr.length-2;i>=0;i--){
+            int peek = stack.peek();
+            
+            if(stack.peek() < arr[i]){
+                result.add(peek);
+            }else{
+                while(!stack.isEmpty()){
+                    if(stack.peek() < arr[i]){
+                        result.add(stack.peek());
+                        break;
+                    }else{
+                        stack.pop();
+                    }
+                }
+                
+                if(stack.isEmpty()){
+                    result.add(-1);
+                }
+            }
+            
+            stack.push(arr[i]);
+        }
+        
+        Collections.reverse(result);
+        
+        return result;
+    }
+}
+
+
 9) Daily Temperatures
 Approach : Using Stack [ Here also we need to find next warmer day]
 
@@ -675,6 +715,23 @@ Lookup is constant time.
 | Store Character | `indexOf()`    | ❌ **O(n²)**     | O(n)  |
 | Store Index     | No scan needed | ✅ **O(n)**      | O(n)  |
 
+If you only need the first non-repeating character index , a two-pass approach is simpler:
+
+	String str = "leetcode";
+
+	int[] freq = new int[26];
+
+	for (char ch : str.toCharArray()) {
+		freq[ch - 'a']++;
+	}
+
+	for (int i = 0; i < str.length(); i++) {
+		if (freq[str.charAt(i) - 'a'] == 1) {
+			System.out.println(i);
+			break;
+		}
+	}
+This is O(n) time and O(1) space.
 		
 13) Online Stock Span [ NEAREST PREVIOUS GREATER PRICE ]
 	
