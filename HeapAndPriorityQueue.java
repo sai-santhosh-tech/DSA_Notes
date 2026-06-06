@@ -226,6 +226,17 @@ k = No of Elements
 Time Complexity => O(n log k)
 Space Complexity => O(k)
 
+Which is Recommended?
+If k is much smaller than n
+Min Heap is preferred.
+
+Example:
+n = 1,000,000
+k = 10
+Sorting  : O(n log n)
+Heap     : O(n log 10)
+log 10 is tiny compared to log 1,000,000, so heap is significantly faster.
+
 3) Kth Largest Element in a Stream
 
 Example :
