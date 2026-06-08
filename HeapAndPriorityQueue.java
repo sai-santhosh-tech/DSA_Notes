@@ -277,6 +277,38 @@ class KthLargest {
 
 Time => O(n log k), Space => O(k)
 
+Input: arr[] = [1, 2, 3, 4, 5, 6], k = 4
+Output: [-1, -1, -1, 1, 2, 3]
+Explanation: 
+After 1, the steam is [1]. The 4th largest does not exist. Output is -1.
+After 2, the stream is [1, 2]. The 4th largest does not exist. Output is -1.
+After 3, the stream is [1, 2, 3]. The 4th largest does not exist. Output is -1.
+After 4, the stream is [1, 2, 3, 4]. The 4th largest is 1.
+After 5, the stream is [1, 2, 3, 4, 5]. The 4th largest is 2.
+After 6, the stream is [1, 2, 3, 4, 5, 6]. The 4th largest is 3.
+
+class Solution {
+    static ArrayList<Integer> kthLargest(int[] arr, int k) {
+      ArrayList<Integer> result = new ArrayList<>();
+      PriorityQueue<Integer> pq = new PriorityQueue<>();
+      
+      for(int num : arr){
+          pq.offer(num);
+          
+          if(pq.size() > k){
+              pq.poll();
+              result.add(pq.peek());
+          }else if(pq.size() == k){
+              result.add(pq.peek());
+          }else{
+              result.add(-1);
+          }
+      }
+      
+      return result;
+    }
+}
+
 4) Last Stone Weight
 
 Example 1:
@@ -371,7 +403,32 @@ class Solution {
     }
 }
 
-6)Kth Smallest Element in a Sorted Matrix
+
+6)Kth Smallest Element in an Array
+Input: arr[] = [7, 10, 4, 3, 20, 15], k = 3
+Output: 7
+Explanation: 3rd smallest element in the given array is 7.
+
+
+class Solution {
+    public int kthSmallest(int[] arr, int k) {
+        PriorityQueue<Integer> pq  = new PriorityQueue<>((a,b) -> b.compareTo(a));
+        
+        for(int num : arr){
+            pq.offer(num);
+            
+            if(pq.size() > k){
+                pq.poll();
+            }
+        }
+        
+        return pq.peek();
+        
+    }
+}
+
+
+7)Kth Smallest Element in a Sorted Matrix
 
 Given an n x n matrix where each of the rows and columns is sorted in ascending order, return the kth smallest element in the matrix.
 Example:
