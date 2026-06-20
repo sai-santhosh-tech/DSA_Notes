@@ -16,7 +16,7 @@ PROBLEMS :
 
 1) Remove Duplicates from Sorted Array : Use 2 Pointer 
 	
- public int removeDuplicates(int[] nums) {
+   public int removeDuplicates(int[] nums) {
         int uniqueIndex = 0;
 
         if(nums.length == 0){
@@ -34,19 +34,25 @@ PROBLEMS :
                 nums[uniqueIndex]=nums[i];
            }
         }
-        return uniqueIndex+1;     
-    }
 
-ALLOW MAX 2 DUPLICATES => 
+        return uniqueIndex+1;
+        
+    }
+	
+	Allow max 2 duplicates
+
 	class Solution {
-    public int removeDuplicates(int[] nums) { 
+    public int removeDuplicates(int[] nums) {
+        
         int idx = 2;
+
         for(int i=2;i<nums.length;i++){
             if(nums[i] != nums[idx-2]){
                 nums[idx]=nums[i];
                 idx++;
             }
         }
+
         return idx;
     }
 }
@@ -59,7 +65,34 @@ NOTE : If allow k duplicates means replace 2(idx = 2) with k(idx = k) in code
 				idx++;
 		}
 	}
-	
+
+
+For unsorted Array 
+
+Without Using Collections (Brute Force)
+int[] arr = {4, 2, 7, 2, 4, 8, 1};
+
+for (int i = 0; i < arr.length; i++) {
+    boolean duplicate = false;
+
+    for (int j = 0; j < i; j++) {
+        if (arr[i] == arr[j]) {
+            duplicate = true;
+            break;
+        }
+    }
+
+    if (!duplicate) {
+        System.out.print(arr[i] + " ");
+    }
+}
+output : 4 2 7 8 1
+
+"How would you remove duplicates from an unsorted array?"
+1) Using HashSet → O(n) time, O(n) space.
+2) Using LinkedHashSet → O(n) time, preserves insertion order.
+3) Without extra space → sort the array first (O(n log n)) and remove adjacent duplicates, or use a brute-force O(n²) solution if sorting is not allowed.
+
 2) Remove Element : Use 2 Pointer
 
 3) Reverse String(Character array) : Use 2 pointer
@@ -91,7 +124,7 @@ NOTE : If allow k duplicates means replace 2(idx = 2) with k(idx = k) in code
 
 		   return maxProfit;
 		}
-5) Merge Sorted Array
+5) Merge Sorted Array( In-place merge )
 	Input: nums1 = [1,2,3], m = 3 nums2 = [2,5,6], n = 3
 	Output: [1,2,2,3,5,6]
 	
@@ -135,6 +168,35 @@ NOTE : If allow k duplicates means replace 2(idx = 2) with k(idx = k) in code
             }
       }
 	  
+	  
+  1. Merge Two Sorted Arrays into a New Array
+		int[] arr1 = {1, 3, 5};
+		int[] arr2 = {2, 4, 6};
+
+		int[] result = new int[arr1.length + arr2.length];
+		int i = 0, j = 0, k = 0;
+
+		while (i < arr1.length && j < arr2.length) {
+			if (arr1[i] < arr2[j]) {
+				result[k++] = arr1[i++];
+			} else {
+				result[k++] = arr2[j++];
+			}
+		}
+
+		while (i < arr1.length) {
+			result[k++] = arr1[i++];
+		}
+
+		while (j < arr2.length) {
+			result[k++] = arr2[j++];
+		}
+	  
+		Complexity
+			Time: O(m + n)
+			Space: O(m + n)
+			
+
 6) Move Zeros : Use 2 Pointer [ Shift No Zero elements to the front of the array and assing zeros to remaining array]
 	public void moveZeroes(int[] nums) {
 
@@ -233,7 +295,7 @@ NOTE : If allow k duplicates means replace 2(idx = 2) with k(idx = k) in code
 
         swap(nums, 0, n-k-1); // Reverse the 1st part
         swap(nums, n-k, n-1); // Reverse the 2nd part
-        swap(nums, 0, n-1  // Reverse the whole array
+        swap(nums, 0, n-1)  // Reverse the whole array
         
     }
     public void swap(int[] nums, int left, int right){
@@ -353,9 +415,10 @@ required = prefixSum - k = 3 - 3 = 0
 
 👉 Now we check:
 sumCountMap.containsKey(0)
+
 ❌ If we didn’t put (0,1) → map doesn’t contain 0
 👉 We miss this valid subarray
-	
+
 // Try out for this array [2, 3, -5, 5, -5, 1, 4] k=5 output => 
 // Why we are adding (0,1) in the Map (Initially)
 Picture this array with imaginary position −1
